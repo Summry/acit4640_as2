@@ -14,7 +14,9 @@ variable "ami_id" {
 
 variable "subnet_ids" {
   description = "List of subnet IDs"
-  type        = list(string)
+  type        = list(object({
+    id = string
+  }))
 }
 
 variable "availability_zones" {
