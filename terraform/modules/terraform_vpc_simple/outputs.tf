@@ -1,16 +1,21 @@
-output "vpc" {
-  value = aws_vpc.vpc_1
+output "vpc_id" {
+  value = aws_vpc.vpc_1.id
 }
 
-output "sn_1" {
-  value = aws_subnet.sn_1
+output "sn_1_id" {
+  value = aws_subnet.sn_1.id
 
 }
 
-output "gw_1" {
-  value = aws_internet_gateway.gw_1
+output "gw_1_id" {
+  value = aws_internet_gateway.gw_1.id
 }
 
-output "rt_1" {
-  value = aws_route_table.rt_1
+output "rt_1_id" {
+  value = aws_route_table.rt_1.id
 }
+
+output "sg_1_id" {
+  value = aws_security_group.sg_1.id
+}
+

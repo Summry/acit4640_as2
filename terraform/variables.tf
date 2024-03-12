@@ -33,6 +33,10 @@ variable "bcit_net" {
   
 }
 
+variable "ami_id" {
+  description = "AMI ID"
+}
+
 variable "ssh_key_name"{
   description = "AWS SSH key name"
   default = "acit_4640_202330"

@@ -2,11 +2,6 @@ variable "project_name" {
   description = "Project name"
 
 }
-variable "type" {
-  description = "Instance type"
-  default     = "t2.micro"
-  
-}
 
 variable "aws_region" {
   description = "AWS region"
@@ -26,6 +21,9 @@ variable "security_group_id" {
 
 variable "ssh_key_name" {
   description = "AWS SSH key name"
-  default     = "acit_4640_202410"
+  default     = "acit_4640_202330"
 }
 
+provider "aws" {
+  region = var.aws_region
+}

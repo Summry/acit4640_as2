@@ -24,39 +24,7 @@ resource "aws_subnet" "sn_1" {
     Project = var.project_name
   }
 
-  lifecycle {
-    precondition {
-      # Check if subnet_cidr is within vpc_cidr
-      #   - verify that subnet cidr is within vpc cidr
-      #   - get address of vpc_dir
-      #   - split at bytes
-      #   - convert to binary and reassamble
-      #   - truncate at end of network bits 
-      #   - check if the network bits of the vpc cidr are the same as the subnet cidr
-      #     for the number of bits in the vpc_cidr network address
-      condition = (
-        substr(
-          join( # Join each binary string byte together to make binary string address
-            "",
-            formatlist("%8.8b", split(".",cidrhost(var.vpc_cidr,0))) #Convert each byte to binary string
-          ),
-          0, # Slice starting at start of Binary Address
-          tonumber(split("/",var.vpc_cidr)[1]) # Slice until length of network bits
-        ) 
-      == 
-        substr(
-          join( # Join each binary string byte together to make binary string address
-            "",formatlist("%8.8b", #Convert each byte of IP address to binary string
-            split(".",cidrhost(var.subnet_cidr,0)))), #Split IP address into bytes
-            0, # start at high order bit of binary IP address
-            tonumber(split("/",var.vpc_cidr)[1]) # continue until end of network bits
-        )
-      )
-      error_message = "Subnet CIDR must be within VPC CIDR."
-    }
-  }
 }
-
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway
 resource "aws_internet_gateway" "gw_1" {
@@ -87,3 +55,99 @@ resource "aws_route_table_association" "web_rt_assoc_1" {
   subnet_id      = aws_subnet.sn_1.id
   route_table_id = aws_route_table.rt_1.id
 }
+
+resource "aws_security_group" "sg_1" {
+  name        = "sg_1"
+  description = "Allow http,ssh, port 5000 access to ec2 from home and bcit"
+  vpc_id      = aws_vpc.vpc_1.id
+}
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_egress_rule" "egress_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = -1
+  cidr_ipv4         = "0.0.0.0/0"
+  tags = {
+    Name    = "egress_rule"
+    Project = var.project_name
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_ingress_rule" "ssh_home_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = "tcp"
+  from_port         = 22
+  to_port           = 22
+  cidr_ipv4         = var.home_net
+  tags = {
+    Name    = "ssh_home_rule"
+    Project = var.project_name
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_ingress_rule" "ssh_bcit_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = "tcp"
+  from_port         = 22
+  to_port           = 22
+  cidr_ipv4         = var.bcit_net
+  tags = {
+    Name    = "ssh_bcit_rule"
+    Project = var.project_name
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_ingress_rule" "http_home_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = "tcp"
+  from_port         = 80
+  to_port           = 80
+  cidr_ipv4         = var.home_net
+  tags = {
+    Name    = "http_home_rule"
+    Project = var.project_name
+  }
+}
+
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_ingress_rule" "http_bcit_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = "tcp"
+  from_port         = 80
+  to_port           = 80
+  cidr_ipv4         = var.bcit_net
+  tags = {
+    Name    = "http_bcit_rule"
+    Project = var.project_name
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_ingress_rule" "nc_home_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = "tcp"
+  from_port         = 5000
+  to_port           = 5000
+  cidr_ipv4         = var.home_net
+  tags = {
+    Name    = "nc_home_rule"
+    Project = var.project_name
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
+resource "aws_vpc_security_group_ingress_rule" "nc_bcit_rule" {
+  security_group_id = aws_security_group.sg_1.id
+  ip_protocol       = "tcp"
+  from_port         = 5000 
+  to_port           = 5000 
+  cidr_ipv4         = var.bcit_net
+  tags = {
+    Name    = "nc_bcit_rule"
+    Project = var.project_name
+  }
+}
+
