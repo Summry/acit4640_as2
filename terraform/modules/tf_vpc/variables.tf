@@ -22,16 +22,22 @@ variable "subnet2_cidr" {
   default     = "10.0.2.0/24"
 }
 
+variable "availability_zone_1" {
+  description = "Availability Zone"
+  default     = "us-west-2a"
+}
+
+variable "availability_zone_1" {
+  description = "Availability Zone"
+  default     = "us-west-2b"
+}
+
 variable "default_route"{
   description = "Default route"
   default     = "0.0.0.0/0"
 }
 
-variable "ami_id" {
-  description = "AMI ID"
-}
-
-variable "ssh_key_name"{
-  description = "AWS SSH key name"
-  default = "acit4640as2"
+variable "sg_cidr" {
+  description = "Egress and Ingress CIDR for security group"
+  default     = "0.0.0.0/16"
 }

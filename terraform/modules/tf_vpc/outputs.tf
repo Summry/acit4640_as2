@@ -4,7 +4,10 @@ output "vpc_id" {
 
 output "sn_1_id" {
   value = aws_subnet.sn_1.id
+}
 
+output "sn_2_id" {
+  value = aws_subnet.sn_2.id
 }
 
 output "gw_1_id" {

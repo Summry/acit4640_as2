@@ -4,7 +4,10 @@ output "vpc_id" {
 
 output "sn_1" {
   value = module.vpc.sn_1_id
+}
 
+output "sn_2" {
+  value = module.vpc.sn_2_id 
 }
 
 output "gw_1" {
