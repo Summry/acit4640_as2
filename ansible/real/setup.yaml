@@ -20,34 +20,47 @@
         name: bun
         shell: /bin/bash
         home: /home/bun
+        group: sudo
         createhome: yes
         state: present
 
     - name: Install bun runtime
       become_user: bun
-      shell: |
-        curl -sL https://bun.sh | bash
+      shell: curl -fsSL https://bun.sh/install | sudo -u bun bash
       args:
-        creates: /home/bun/.bun
+        creates: /home/bun/.bun/bin/bun
 
-    - name: Install Caddy web server
-      become: true
-      apt:
-        name: caddy
-        state: present
-      tags: caddy
+    - name: Install Caddy web server following official instructions
+      become_user: bun
+      shell: |
+        sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+        curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+        curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+        sudo apt update
+        sudo apt install caddy
+      args:
+        creates: /usr/bin/caddy
 
-    - name: Transfer application files
-      synchronize:
-        src: /path/to/4640-assignment-app-files/bun-htmx-4640
-        dest: /home/bun/bun-htmx-4640
+    - name: Create app directory
+      file:
+        path: "{{ app_directory }}"
+        state: directory
         owner: bun
         group: bun
-        delete: yes
+        mode: "0755"
+
+    - name: Transfer application files
+      copy:
+        src: "{{ item }}"
+        dest: "{{ app_directory }}"
+        owner: bun
+        group: bun
+        mode: preserve
+      loop: "{{ lookup('fileglob', './4640-assignment-app-files/bun-htmx-4640/*', wantlist=True) }}"
 
     - name: Transfer service file
       copy:
-        src: /path/to/4640-assignment-app-files/bun-4640-project.service
+        src: ./4640-assignment-app-files/bun-4640-project.service
         dest: /etc/systemd/system/bun-4640-project.service
         owner: root
         group: root
@@ -56,7 +69,7 @@
 
     - name: Replace default Caddyfile
       copy:
-        src: /path/to/4640-assignment-app-files/Caddyfile
+        src: ./4640-assignment-app-files/Caddyfile
         dest: /etc/caddy/Caddyfile
         owner: root
         group: root
