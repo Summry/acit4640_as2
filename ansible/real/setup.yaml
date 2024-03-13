@@ -31,7 +31,7 @@
         creates: /home/bun/.bun/bin/bun
 
     - name: Install Caddy web server following official instructions
-      become_user: bun
+      become: true
       shell: |
         sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
         curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
@@ -55,17 +55,17 @@
         dest: "{{ app_directory }}"
         owner: bun
         group: bun
-        mode: preserve
+        mode: "0644"
       loop: "{{ lookup('fileglob', './4640-assignment-app-files/bun-htmx-4640/*', wantlist=True) }}"
 
     - name: Transfer service file
       copy:
-        src: ./4640-assignment-app-files/bun-4640-project.service
-        dest: /etc/systemd/system/bun-4640-project.service
+        src: "./4640-assignment-app-files/{{ service_file_name }}"
+        dest: "/etc/systemd/system/{{ service_file_name }}"
         owner: root
         group: root
         mode: "0644"
-      notify: restart bun-4640-project.service
+      notify: restart "{{ service_file_name}}"
 
     - name: Replace default Caddyfile
       copy:
@@ -77,9 +77,9 @@
       notify: restart caddy
 
   handlers:
-    - name: restart bun-4640-project.service
+    - name: restart "{{ service_file_name }}"
       systemd:
-        name: bun-4640-project.service
+        name: "{{ service_file_name }}"
         state: restarted
 
     - name: restart caddy
