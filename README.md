@@ -10,7 +10,7 @@ This assignment is to demonstrate the use of Ansible and Terraform to provision 
 
 # Team Members
 
-- [x] [Nazira Fakhrurradi] (A01279940)
+- [x] Nazira Fakhrurradi (A01279940)
 
 # Installation
 
@@ -46,7 +46,7 @@ git clone https://github.com/Summry/acit4640_as2.git
 ## Ansible
 
 1. Navigate to the `ansible` directory.
-2. Run `ansible-playbook -i inventory.ini playbook.yml` to run the playbook.
+2. Run `ansible-playbook -i inventory.yaml setup.yaml` to run the playbook.
 
 # Conclusion
 
