@@ -4,6 +4,10 @@
 
 This assignment is to demonstrate the use of Ansible and Terraform to provision and automate infrastructure.
 
+# Video
+
+[ACIT 4640 Assignment 2 - Ansible and Terraform](https://youtu.be/)
+
 # Team Members
 
 - [x] [Nazira Fakhrurradi] (A01279940)
