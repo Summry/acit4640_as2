@@ -32,12 +32,12 @@ variable "availability_zone_2" {
   default     = "us-west-2b"
 }
 
-variable "default_route"{
+variable "default_route" {
   description = "Default route"
   default     = "0.0.0.0/0"
 }
 
 variable "sg_cidr" {
   description = "Egress and Ingress CIDR for security group"
-  default     = "0.0.0.0/16"
+  default     = "0.0.0.0/0"
 }
