@@ -14,14 +14,10 @@ variable "ami_id" {
 
 variable "subnet_ids" {
   description = "List of subnet IDs"
-  type        = list(object({
-    id = string
-  }))
 }
 
 variable "availability_zones" {
   description = "List of availability zones"
-  type        = list(string)
   default = [ "us-west-2a" , "us-west-2b" ]
 }
 
@@ -31,10 +27,9 @@ variable "security_group_id" {
 
 variable "ssh_key_name" {
   description = "AWS SSH key name"
-  default     = "acit4640as2"
 }
 
-variable "count" {
+variable "ec2_count" {
   description = "Number of instances to create"
   default     = 2
 }

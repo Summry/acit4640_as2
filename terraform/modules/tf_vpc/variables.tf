@@ -27,7 +27,7 @@ variable "availability_zone_1" {
   default     = "us-west-2a"
 }
 
-variable "availability_zone_1" {
+variable "availability_zone_2" {
   description = "Availability Zone"
   default     = "us-west-2b"
 }
