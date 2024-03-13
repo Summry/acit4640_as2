@@ -1,21 +1,26 @@
 ---
-- name: Setup Application Environment
-  hosts: your_ec2_instances
+- name: Configure EC2 instances
+  hosts: all
   become: true
+  vars:
+    app_directory: /home/bun/bun-htmx-4640
+    service_file_name: bun-4640-project.service
 
   tasks:
     - name: Install required packages (curl, unzip)
       apt:
-        name: "{{ item }}"
+        name:
+          - curl
+          - unzip
         state: present
-      loop:
-        - curl
-        - unzip
-      become: true
+        update_cache: yes
 
     - name: Create bun user
       user:
         name: bun
+        shell: /bin/bash
+        home: /home/bun
+        createhome: yes
         state: present
 
     - name: Install bun runtime
