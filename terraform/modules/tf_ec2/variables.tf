@@ -16,6 +16,16 @@ variable "subnet_ids" {
   description = "List of subnet IDs"
 }
 
+variable "instance_type" {
+  description = "EC2 instance type"
+  default     = "t2.micro"
+}
+
+variable "name_tag" {
+  description = "Name of instance"
+  default     = "ec2_instance"
+}
+
 variable "availability_zones" {
   description = "List of availability zones"
   default = [ "us-west-2a" , "us-west-2b" ]
