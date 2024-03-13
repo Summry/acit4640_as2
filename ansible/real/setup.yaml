@@ -1,0 +1,70 @@
+---
+- name: Setup Application Environment
+  hosts: your_ec2_instances
+  become: true
+
+  tasks:
+    - name: Install required packages (curl, unzip)
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - curl
+        - unzip
+      become: true
+
+    - name: Create bun user
+      user:
+        name: bun
+        state: present
+
+    - name: Install bun runtime
+      become_user: bun
+      shell: |
+        curl -sL https://bun.sh | bash
+      args:
+        creates: /home/bun/.bun
+
+    - name: Install Caddy web server
+      become: true
+      apt:
+        name: caddy
+        state: present
+      tags: caddy
+
+    - name: Transfer application files
+      synchronize:
+        src: /path/to/4640-assignment-app-files/bun-htmx-4640
+        dest: /home/bun/bun-htmx-4640
+        owner: bun
+        group: bun
+        delete: yes
+
+    - name: Transfer service file
+      copy:
+        src: /path/to/4640-assignment-app-files/bun-4640-project.service
+        dest: /etc/systemd/system/bun-4640-project.service
+        owner: root
+        group: root
+        mode: "0644"
+      notify: restart bun-4640-project.service
+
+    - name: Replace default Caddyfile
+      copy:
+        src: /path/to/4640-assignment-app-files/Caddyfile
+        dest: /etc/caddy/Caddyfile
+        owner: root
+        group: root
+        mode: "0644"
+      notify: restart caddy
+
+  handlers:
+    - name: restart bun-4640-project.service
+      systemd:
+        name: bun-4640-project.service
+        state: restarted
+
+    - name: restart caddy
+      systemd:
+        name: caddy
+        state: restarted

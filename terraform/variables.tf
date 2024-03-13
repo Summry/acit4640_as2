@@ -5,6 +5,7 @@ variable "aws_region" {
 
 variable "project_name" {
   description = "Project name - as2"
+  default     = "as2"
 }
 
 variable "vpc_cidr" {
@@ -22,7 +23,7 @@ variable "subnet2_cidr" {
   default     = "10.0.2.0/24"
 }
 
-variable "default_route"{
+variable "default_route" {
   description = "Default route"
   default     = "0.0.0.0/0"
 }
@@ -31,7 +32,7 @@ variable "ami_id" {
   description = "AMI ID"
 }
 
-variable "ssh_key_name"{
+variable "ssh_key_name" {
   description = "AWS SSH key name"
-  default = "ACIT4640_key"
+  default     = "ACIT4640_key"
 }

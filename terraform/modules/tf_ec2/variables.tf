@@ -1,6 +1,5 @@
 variable "project_name" {
   description = "Project name"
-
 }
 
 variable "aws_region" {
@@ -28,7 +27,7 @@ variable "name_tag" {
 
 variable "availability_zones" {
   description = "List of availability zones"
-  default = [ "us-west-2a" , "us-west-2b" ]
+  default     = ["us-west-2a", "us-west-2b"]
 }
 
 variable "security_group_id" {
@@ -37,6 +36,11 @@ variable "security_group_id" {
 
 variable "ssh_key_name" {
   description = "AWS SSH key name"
+}
+
+variable "ssh_key_path" {
+  description = "Path to the SSH private key"
+  default     = "~/.ssh/4640_key"
 }
 
 variable "ec2_count" {
