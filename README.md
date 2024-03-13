@@ -57,4 +57,4 @@ This assignment has demonstrated the use of Ansible and Terraform to provision a
 - [Terraform](https://www.terraform.io/)
 - [Ansible](https://www.ansible.com/)
 
-# ![Go to Top](#introduction)
+# [Go to Top](#acit-4640-assignment-2---ansible-and-terraform)
