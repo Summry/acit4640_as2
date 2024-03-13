@@ -10,6 +10,14 @@ This assignment is to demonstrate the use of Ansible and Terraform to provision 
 
 # Installation
 
+## Repository
+
+1. Clone the repository to your local machine.
+
+```bash
+git clone https://github.com/Summry/acit4640_as2.git
+```
+
 ## Terraform
 
 1. Download the Terraform binary from the [official website](https://www.terraform.io/downloads.html).
