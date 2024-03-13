@@ -24,3 +24,25 @@ This assignment is to demonstrate the use of Ansible and Terraform to provision 
 # Usage
 
 ## Terraform
+
+1. Navigate to the `terraform` directory.
+2. Run `terraform init` to initialize the working directory.
+3. Run `terraform plan` to see the changes that will be made.
+4. Run `terraform apply` to create the infrastructure.
+5. Run `terraform destroy` to delete the infrastructure.
+
+## Ansible
+
+1. Navigate to the `ansible` directory.
+2. Run `ansible-playbook -i inventory.ini playbook.yml` to run the playbook.
+
+# Conclusion
+
+This assignment has demonstrated the use of Ansible and Terraform to provision and automate infrastructure.
+
+# References
+
+- [Terraform](https://www.terraform.io/)
+- [Ansible](https://www.ansible.com/)
+
+# ![Go to Top](#introduction)
