@@ -42,7 +42,7 @@ resource "local_file" "inventory" {
         ansible_host: ${local.instance2_public_dns}
   EOF
 
-  filename = "/home/nazira/BCIT/acit4640/nazira_fakhrurradi_as2/ansible/inventory.yaml"
+  filename = "${path.root}/../ansible/inventory.yaml"
 }
 
 resource "local_file" "ansible_config" {
@@ -53,12 +53,12 @@ resource "local_file" "ansible_config" {
   content = <<-EOT
   [defaults]
   inventory = inventory.yaml
-  stdout_callback = yaml
+  stdout_callback = debug
 
   [ssh_connection]
   host_key_checking = False
   ssh_common_args = -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   EOT
 
-  filename = "/home/nazira/BCIT/acit4640/nazira_fakhrurradi_as2/ansible/ansible.cfg"
+  filename = "${path.root}/../ansible/ansible.cfg"
 }
