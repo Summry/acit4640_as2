@@ -34,7 +34,7 @@ resource "local_file" "inventory" {
   all:
     vars:
       ansible_user: ubuntu
-      ansible_ssh_private_key_file: ${var.ssh_key_path} # ~/.ssh/4640_key
+      ansible_ssh_private_key_file: ${var.ssh_key_path}
     hosts:
       instance1:
         ansible_host: ${local.instance1_public_dns}

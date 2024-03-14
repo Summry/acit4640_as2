@@ -36,5 +36,4 @@ variable "ami_id" {
 
 variable "ssh_key_name" {
   description = "AWS SSH key name"
-  default     = "ACIT4640_key"
 }
