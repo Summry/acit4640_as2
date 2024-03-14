@@ -1,8 +1,10 @@
+# Module block for the vpc
 module "vpc" {
   source       = "./modules/tf_vpc"
   project_name = var.project_name
 }
 
+# Module block for the EC2 instances
 module "ec2" {
   source            = "./modules/tf_ec2"
   project_name      = var.project_name

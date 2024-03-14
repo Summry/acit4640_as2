@@ -1,4 +1,8 @@
 resource "aws_instance" "ec2_instance" {
+  /* 
+    The number of EC2 instances to launch each with varying configurations.
+  */
+
   count             = var.ec2_count
   ami               = var.ami_id
   instance_type     = var.instance_type
@@ -13,11 +17,18 @@ resource "aws_instance" "ec2_instance" {
 }
 
 locals {
+  /* 
+    The public DNS of the EC2 instances.
+  */
+
   instance1_public_dns = aws_instance.ec2_instance[0].public_dns
   instance2_public_dns = aws_instance.ec2_instance[1].public_dns
 }
 
 resource "local_file" "inventory" {
+  /* 
+    Builds the inventory file for Ansible.
+  */
 
   content = <<-EOF
   all:
@@ -35,6 +46,9 @@ resource "local_file" "inventory" {
 }
 
 resource "local_file" "ansible_config" {
+  /* 
+    Builds the Ansible configuration file.
+  */
 
   content = <<-EOT
   [defaults]

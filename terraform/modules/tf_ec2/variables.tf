@@ -1,3 +1,7 @@
+/*
+  Variables for the EC2 module
+*/
+
 variable "project_name" {
   description = "Project name"
 }
@@ -39,6 +43,8 @@ variable "ssh_key_name" {
 }
 
 variable "ssh_key_path" {
+  // Local path to the SSH private key
+  
   description = "Path to the SSH private key"
   default     = "~/.ssh/4640_key"
 }

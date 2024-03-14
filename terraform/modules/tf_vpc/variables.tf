@@ -1,3 +1,7 @@
+/*
+  This file contains the variables that are used in the VPC module
+*/
+
 variable "aws_region" {
   description = "AWS region"
   default     = "us-west-2"

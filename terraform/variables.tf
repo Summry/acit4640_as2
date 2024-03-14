@@ -1,3 +1,5 @@
+# Define the variables used in the Terraform configuration.
+
 variable "aws_region" {
   description = "AWS region"
   default     = "us-west-2"

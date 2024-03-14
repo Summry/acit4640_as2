@@ -1,3 +1,7 @@
+/*
+  This file contains the output variables for the EC2 instances.
+*/
+
 output "ec2_instance1_id" {
   value = aws_instance.ec2_instance[0].id
 }

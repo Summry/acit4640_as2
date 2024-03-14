@@ -1,3 +1,4 @@
+# Configuration file for the AS2 project
 aws_region = "us-west-2"
 project_name = "as2"
 ami_id = "ami-06c402714cc165c7b"
