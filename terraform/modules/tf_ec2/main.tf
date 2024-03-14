@@ -53,7 +53,7 @@ resource "local_file" "ansible_config" {
   content = <<-EOT
   [defaults]
   inventory = inventory.yaml
-  stdout_callback = debug
+  stdout_callback = yaml
 
   [ssh_connection]
   host_key_checking = False

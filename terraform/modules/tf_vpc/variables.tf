@@ -2,13 +2,12 @@
   This file contains the variables that are used in the VPC module
 */
 
-variable "aws_region" {
-  description = "AWS region"
-  default     = "us-west-2"
+variable "project_name" {
+  description = "Project name"
 }
 
-variable "project_name" {
-  description = "Project name - as2"
+variable "aws_region" {
+  description = "AWS region"
 }
 
 variable "vpc_cidr" {

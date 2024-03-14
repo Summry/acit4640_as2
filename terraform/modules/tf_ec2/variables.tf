@@ -8,7 +8,6 @@ variable "project_name" {
 
 variable "aws_region" {
   description = "AWS region"
-  default     = "us-west-2"
 }
 
 variable "ami_id" {
