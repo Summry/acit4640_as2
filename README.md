@@ -19,7 +19,7 @@ This assignment is to demonstrate the use of Ansible and Terraform to provision 
 1. Clone the repository to your local machine.
 
 ```bash
-git clone https://github.com/Summry/acit4640_as2.git
+git clone https://github.com/Summry/nazira_fakhrurradi_as2.git
 ```
 
 ## Terraform
@@ -45,8 +45,10 @@ git clone https://github.com/Summry/acit4640_as2.git
 
 ## Ansible
 
+> After creating the infrastructure using Terraform, the Ansible playbook can be run to configure the servers.
+
 1. Navigate to the `ansible` directory.
-2. Run `ansible-playbook -i inventory.yaml setup.yaml` to run the playbook.
+2. Run `ansible-playbook setup.yaml` to run the playbook.
 
 # Conclusion
 
