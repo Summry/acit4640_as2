@@ -31,7 +31,7 @@ resource "local_file" "inventory" {
         ansible_host: ${local.instance2_public_dns}
   EOF
 
-  filename = "/home/nazira/BCIT/ACIT4640/acit4640_as2/ansible/inventory.yaml"
+  filename = "/home/nazira/BCIT/acit4640/nazira_fakhrurradi_as2/ansible/inventory.yaml"
 }
 
 resource "local_file" "ansible_config" {
@@ -46,5 +46,5 @@ resource "local_file" "ansible_config" {
   ssh_common_args = -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
   EOT
 
-  filename = "/home/nazira/BCIT/ACIT4640/acit4640_as2/ansible/ansible.cfg"
+  filename = "/home/nazira/BCIT/acit4640/nazira_fakhrurradi_as2/ansible/ansible.cfg"
 }

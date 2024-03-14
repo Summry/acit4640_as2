@@ -8,31 +8,43 @@
 
   tasks:
     - name: Install required packages (curl, unzip)
-      apt:
+      ansible.builtin.apt:
         name:
+          - acl
           - curl
           - unzip
         state: present
         update_cache: yes
 
     - name: Create bun user
-      user:
+      ansible.builtin.user:
         name: bun
         shell: /bin/bash
-        home: /home/bun
-        group: sudo
-        createhome: yes
         state: present
+
+    - name: Add bun to the sudo group
+      ansible.builtin.user:
+        name: bun
+        groups: sudo
+        append: yes
+
+    - name: Create tmp dir for ansible
+      ansible.builtin.file:
+        path: /home/bun/.ansible/tmp
+        state: directory
+        mode: "1777"
+        owner: bun
+        group: bun
 
     - name: Install bun runtime
       become_user: bun
-      shell: curl -fsSL https://bun.sh/install | sudo -u bun bash
+      ansible.builtin.shell: curl -fsSL https://bun.sh/install | sudo -u bun bash
       args:
         creates: /home/bun/.bun/bin/bun
 
     - name: Install Caddy web server following official instructions
       become: true
-      shell: |
+      ansible.builtin.shell: |
         sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
         curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
         curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
@@ -42,7 +54,7 @@
         creates: /usr/bin/caddy
 
     - name: Create app directory
-      file:
+      ansible.builtin.file:
         path: "{{ app_directory }}"
         state: directory
         owner: bun
@@ -50,7 +62,7 @@
         mode: "0755"
 
     - name: Transfer application files
-      copy:
+      ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ app_directory }}"
         owner: bun
@@ -58,17 +70,23 @@
         mode: "0644"
       loop: "{{ lookup('fileglob', './4640-assignment-app-files/bun-htmx-4640/*', wantlist=True) }}"
 
+    - name: Install bun packages
+      become_user: bun
+      ansible.builtin.shell: /home/bun/.bun/bin/bun install
+      args:
+        chdir: "{{ app_directory }}"
+
     - name: Transfer service file
-      copy:
+      ansible.builtin.copy:
         src: "./4640-assignment-app-files/{{ service_file_name }}"
         dest: "/etc/systemd/system/{{ service_file_name }}"
-        owner: root
-        group: root
+        owner: bun
+        group: bun
         mode: "0644"
-      notify: restart "{{ service_file_name}}"
+      notify: restart "{{ service_file_name }}"
 
     - name: Replace default Caddyfile
-      copy:
+      ansible.builtin.copy:
         src: ./4640-assignment-app-files/Caddyfile
         dest: /etc/caddy/Caddyfile
         owner: root
@@ -76,13 +94,25 @@
         mode: "0644"
       notify: restart caddy
 
+    - name: Enable and start the app service
+      ansible.builtin.systemd_service:
+        name: "{{ service_file_name }}"
+        enabled: yes
+        state: started
+
+    - name: Enable and start Caddy service
+      ansible.builtin.systemd_service:
+        name: caddy
+        enabled: yes
+        state: started
+
   handlers:
     - name: restart "{{ service_file_name }}"
-      systemd:
+      ansible.builtin.systemd_service:
         name: "{{ service_file_name }}"
         state: restarted
 
     - name: restart caddy
-      systemd:
+      ansible.builtin.systemd_service:
         name: caddy
         state: restarted
