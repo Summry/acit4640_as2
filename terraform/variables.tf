@@ -2,12 +2,10 @@
 
 variable "aws_region" {
   description = "AWS region"
-  default     = "us-west-2"
 }
 
 variable "project_name" {
   description = "Project name - as2"
-  default     = "as2"
 }
 
 variable "vpc_cidr" {

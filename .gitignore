@@ -3,6 +3,8 @@
 **.terraform.**
 **.tfstate
 **.tfstate.**
+**.tfvars
+terraform/output.yaml
 
 # VSCODE
 .vscode/

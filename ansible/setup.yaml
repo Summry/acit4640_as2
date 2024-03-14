@@ -31,14 +31,6 @@
         groups: sudo
         append: yes
 
-    - name: Create tmp dir for ansible
-      ansible.builtin.file:
-        path: /home/bun/.ansible/tmp
-        state: directory
-        mode: "1777"
-        owner: bun
-        group: bun
-
     - name: Install bun runtime
       become_user: bun
       ansible.builtin.shell: curl -fsSL https://bun.sh/install | sudo -u bun bash
