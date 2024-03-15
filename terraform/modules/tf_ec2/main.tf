@@ -16,6 +16,16 @@ resource "aws_instance" "ec2_instance" {
   }
 }
 
+resource "aws_key_pair" "ssh_key_pair" {
+  /* 
+    The SSH key pair to be used for the EC2 instances.
+    This resource block is repsonsible for importing the SSH public key to AWS.
+  */
+
+  key_name   = var.ssh_key_name
+  public_key = file(var.ssh_pubkey_path)
+}
+
 locals {
   /* 
     The public DNS of the EC2 instances.
@@ -34,7 +44,7 @@ resource "local_file" "inventory" {
   all:
     vars:
       ansible_user: ubuntu
-      ansible_ssh_private_key_file: ${var.ssh_key_path}
+      ansible_ssh_private_key_file: ${var.ssh_privkey_path}
     hosts:
       instance1:
         ansible_host: ${local.instance1_public_dns}

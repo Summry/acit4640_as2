@@ -41,7 +41,14 @@ variable "ssh_key_name" {
   description = "AWS SSH key name"
 }
 
-variable "ssh_key_path" {
+variable "ssh_pubkey_path" {
+  // Local path to the SSH public key
+  
+  description = "Path to the SSH public key"
+  default     = "~/.ssh/4640_key.pub"
+}
+
+variable "ssh_privkey_path" {
   // Local path to the SSH private key
   
   description = "Path to the SSH private key"

@@ -6,7 +6,7 @@ This assignment is to demonstrate the use of Ansible and Terraform to provision 
 
 # Video
 
-[ACIT 4640 Assignment 2 - Ansible and Terraform](https://youtu.be/)
+[ACIT 4640 Assignment 2 - Ansible and Terraform](https://youtu.be/ReSaUvU2HyY)
 
 # Team Members
 
@@ -22,16 +22,29 @@ This assignment is to demonstrate the use of Ansible and Terraform to provision 
 git clone https://github.com/Summry/nazira_fakhrurradi_as2.git
 ```
 
+## SSH Key
+
+Before we begin, an SSH key pair is required to access the servers.
+
+1. Generate a local SSH key pair using the following command.
+
+```bash
+ssh-keygen -t ed25519 -C <email>
+```
+
+2. Name the key pair `4640_key` and place it in the `~/.ssh` directory. If you choose a different name or location, update the `terraform/variables.tf` file accordingly.
+
+> Look at the terraform variables for the ssh key and ssh key path.
+
 ## Terraform
 
-1. Download the Terraform binary from the [official website](https://www.terraform.io/downloads.html).
-2. Extract the downloaded file to a directory in your PATH.
-3. Verify the installation by running `terraform --version`.
+1. Download and install Terraform according to your operating system from the [official website](https://www.terraform.io/downloads.html).
+2. Verify the installation by running `terraform --version`
 
 ## Ansible
 
-1. Install Ansible using the package manager of your choice.
-2. Verify the installation by running `ansible --version`.
+1. Install Ansible using the package manager of your choice or by following the instructions over at [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04).
+2. Verify the installation by running `ansible --version`
 
 # Usage
 
