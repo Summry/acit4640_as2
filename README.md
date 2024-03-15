@@ -61,7 +61,11 @@ ssh-keygen -t ed25519 -C <email>
 > After creating the infrastructure using Terraform, the Ansible playbook can be run to configure the servers.
 
 1. Navigate to the `ansible` directory.
-2. Run `ansible-playbook setup.yaml` to run the playbook.
+2. Run the following command to run the playbook.
+
+```bash
+ansible-playbook setup.yaml
+```
 
 # Conclusion
 
