@@ -8,3 +8,6 @@ terraform/output.yaml
 
 # VSCODE
 .vscode/
+
+# ZIP FILES
+*.zip
