@@ -32,7 +32,7 @@ Before we begin, an SSH key pair is required to access the servers.
 ssh-keygen -t ed25519 -C <email>
 ```
 
-2. Name the key pair `4640_key` and place it in the `~/.ssh` directory. If you choose a different name or location, update the `terraform/variables.tf` file accordingly.
+2. Name the key pair `4640_key` and place it in the `~/.ssh` directory. If you choose a different name or location, update the `terraform/variables.tf` or the `terraform.tfvars` file accordingly.
 
 > Look at the terraform variables for the ssh key and ssh key path.
 
